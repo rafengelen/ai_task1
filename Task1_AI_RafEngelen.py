@@ -175,7 +175,7 @@ def number_result(word : str,solutions : dict):
 
 # %%
 def main(puzzle):
-
+    print(puzzle)
     validate_puzzle(puzzle)
 
     operator = find_operator(puzzle)
@@ -202,6 +202,7 @@ def main(puzzle):
               f"{words[0]} {operator} {words[1]} = {words[2]}",
               f"{number_result(words[0], output)} {operator} {number_result(words[1], output)} = {number_result(words[2], output)}", 
               "__________________________________________________________________\n", sep="\n")
+
         st.write(f"{words[0]} {operator} {words[1]} = {words[2]}")
         st.write(f"{number_result(words[0], output)} {operator} {number_result(words[1], output)} = {number_result(words[2], output)}")
     except:
