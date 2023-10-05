@@ -36,16 +36,16 @@ def validate_operator(puzzle):
     if re.match(pattern, puzzle):
         return True
     else:
-        # raise Exception("The cryptarithmetic puzzle is not in the correct form. Use one operator (+, -, *, /) to define your calculation.")
         st.write(":red[The cryptarithmetic puzzle is not in the correct form. Use one operator (+, -, *, /) to define your calculation.]")
+        raise Exception("The cryptarithmetic puzzle is not in the correct form. Use one operator (+, -, *, /) to define your calculation.")
 
 # the puzzle has an only one = sign
 def validate_equal_sign(puzzle):
     if puzzle.count('=') == 1:
         return True
     else: 
-        # raise Exception('The cryptarithmetic puzzle is not in the correct form. Use one "=" sign.')
         st.write(':red[The cryptarithmetic puzzle is not in the correct form. Use one "=" sign.]')
+        raise Exception('The cryptarithmetic puzzle is not in the correct form. Use one "=" sign.')
     
 # The puzzle has 3 words which are split up by the operator and the = sign
 def validate_3words(puzzle):
@@ -55,8 +55,9 @@ def validate_3words(puzzle):
     if re.match(pattern, modified_string) :
         return True
     else:
-        # raise Exception('The cryptarithmetic puzzle is not in the correct form. The correct form is: "ai + is = fun", you will need 3 words.')
         st.write(':red[The cryptarithmetic puzzle is not in the correct form. The correct form is: "ai + is = fun", you will need 3 words.]')
+        raise Exception('The cryptarithmetic puzzle is not in the correct form. The correct form is: "ai + is = fun", you will need 3 words.')
+        
 
 # Execute all validation functions
 def validate_puzzle(puzzle):
@@ -178,12 +179,16 @@ def main(puzzle):
     validate_puzzle(puzzle)
 
     operator = find_operator(puzzle)
+    print(f"Operator: {operator}")
 
     words = find_words(puzzle, operator)
+    print(f"Words: {words}")
 
     letters = find_letters(words)
+    print(f"Letters: {letters}")
 
     domains = possible_values(letters, words)
+    print(f"Possible values for letters: {domains}")
     
     constraints = [
         (letters, constraint_unique),
@@ -193,9 +198,10 @@ def main(puzzle):
 
     output = backtrack(problem)
     try:
-        print(f"{words[0]} {operator} {words[1]} = {words[2]}\n"+ 
-              f"{number_result(words[0], output)} {operator} {number_result(words[1], output)} = {number_result(words[2], output)}\n" + 
-              "__________________________________________________________________\n")
+        print(f"\nSolution:",
+              f"{words[0]} {operator} {words[1]} = {words[2]}",
+              f"{number_result(words[0], output)} {operator} {number_result(words[1], output)} = {number_result(words[2], output)}", 
+              "__________________________________________________________________\n", sep="\n")
         st.write(f"{words[0]} {operator} {words[1]} = {words[2]}")
         st.write(f"{number_result(words[0], output)} {operator} {number_result(words[1], output)} = {number_result(words[2], output)}")
     except:
